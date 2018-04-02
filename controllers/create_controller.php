@@ -23,4 +23,8 @@ class CreateController extends Controller
            }
        }
     }
+    public function preview()
+    {
+    
+    }
 }

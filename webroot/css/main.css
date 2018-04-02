@@ -104,7 +104,7 @@ html,body{
 }
 a.navbar-brand{
     font-family: "Arial Black";
-    font-size: 25px;
+    font-size: 20px;
 }
 .block-list{
   list-style: none;
@@ -176,10 +176,12 @@ a.navbar-brand{
     border-radius: 0.35rem;
 }
 .pages{
-    padding-left: 550px;
+    padding-left: 520px;
     padding-bottom: 20px;
 }
-
+.task-view{
+    padding-top: 40px;
+}
 
 
 /* Базовые стили слоя затемнения и модального окна  */
@@ -201,12 +203,12 @@ a.navbar-brand{
 }
 /* стили модального окна */
 .popup {
-    top: -100%;
+    top: -10%;
     right: 0;
     left: 50%;
     font-size: 14px;
     z-index: 20;
-    margin: 0;
+    margin: -90px;
     width: 85%;
     min-width: 320px;
     max-width: 600px;

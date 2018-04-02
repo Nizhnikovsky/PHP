@@ -23,10 +23,11 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/admin"><?=Config::get('site_name')?> - <?=__('lng.admin','Панель администратора')?></a>
+            <a class="navbar-brand" href="/">На главную</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/logout" ">Выход</a></li>
+                <li><a href="/users/logout" ">Выход</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

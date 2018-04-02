@@ -8,22 +8,22 @@ class UsersController extends Controller
         $this->model = new User();
     }
     
-    public function admin_login()
+    public function login()
     {
-        if($_POST && isset($_POST['users']) && isset($_POST['password']))
+        if($_POST && isset($_POST['login']) && isset($_POST['password']))
         {
-            $user = $this->model->getByLogin($_POST['users']);
+            $user = $this->model->getByLogin($_POST['login']);
             $hash = md5(Config::get('salt').$_POST['password']);
-            if($user && $hash == $user['password'])
+            if($user && $user['is_active'] && $hash == $user['password'])
             {
-                Session::set('users',$user['users']);
+                Session::set('login',$user['login']);
                 Session::set('role',$user['role']);
             }
-            Router::redirect('/admin');
+            Router::redirect('/admin/');
         }
     }
     
-    public function admin_logout()
+    public function logout()
     {
         Session::destroy();
         Router::redirect('/');

@@ -7,6 +7,7 @@
     <link  rel="stylesheet" href="/webroot/css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link  rel="stylesheet" href="/webroot/js/jquery-ui.css">
     <link rel="script" href="/webroot/js/bootstrap.min.js">
     <link rel="script" href="/webroot/js/bootstrap.js">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -23,10 +24,17 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/"><?=Config::get('site_name')?></a>
+            <?php if(Session::get('role')=='admin'):?>
+            <a class="navbar-brand" href="/admin">Админпанель</a>
+            <?php endif;?>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/admin/users/login" ">Вход</a></li>
+                <?php if(Session::get('role')=='admin'):?>
+                    <li><a href="/users/logout" ">Выход</a></li>
+                <?php else:?>
+                <li><a href="/users/login" ">Вход</a></li>
+                <?php endif;?>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -42,4 +50,7 @@
 <script src="/webroot/js/jquery.min.js"></script>
 <script src="/webroot/js/jquery-1.10.2.min.js"></script>
 <script src="/webroot/js/script.js"></script>
+<script src="/webroot/js/jquery-ui.js"></script>
+<script src="/webroot/js/jquery-ui.min.js"></script>
+<script src="/webroot/js/jquery-1.10.2.min.js"></script>
 </html>

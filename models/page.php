@@ -2,48 +2,44 @@
 
 class Page extends Model
 {
-    public function getList($id= false)
+    public function getList( $page, $count_per_page)
     {
-        $sql = 'select * from task';
-        if($id) {
-            if($id == '?email') {
-                $sql .= ' ORDER BY email ASC';
-            }
-            else if ($id == '?name') {
-                $sql .= ' ORDER BY name ASC';
-            }
-            else if ($id == '?status') {
-                $sql .= ' ORDER BY status ASC';
-            }
+        $start = ($page - 1)* $count_per_page;
+        
+        $sorting = $_GET['sort'];
+    
+        switch ($sorting)
+        {
+        
+            case 'email';
+                $sorting = 'user_mail ASC';
+                break;
+        
+            case 'name';
+                $sorting = 'user_name ASC';
+                break;
+        
+            case 'status';
+                $sorting = 'status DESC';
+                break;
+        
+            default;
+                $sorting = 'id ASC';
+                break;
         }
+        $sorting = $this->db->escape($sorting);
+        $sql = "select * from task order by $sorting limit $start,$count_per_page";
+        
         return $this->db->query($sql);
     }
 
     public function getById($id)
     {
-        $alias = $this->db->escape($id);
+        $id = $this->db->escape($id);
         $sql = "select * from task where id = '{$id}'";
         $result = $this->db->query($sql);
         return isset($result[0])? $result[0] : null;
     }
-    public function getTotalTasks()
-    {
-        $sql = 'select COUNT from task';
-        return $this->db->query($sql);
-    }
-    public function setTask($user_name, $email, $text)
-    {
-        $user_name = $this->db->escape($user_name);
-        $email = $this->db->escape($email);
-        $text = $this->db->escape($text);
-    
-        $sql = 'INSERT INTO `task` ( user_name, user_mail, description) '
-            . 'VALUES ( :user_name, :email, :text)';
-        
-        return $this->db->query($sql);
-        
-    }
-    
     public function save($data, $id = null)
     {
         if(!isset($data['name'])|| !isset($data['email'])|| !isset($data['content'])){
@@ -64,5 +60,32 @@ class Page extends Model
         }
     
         return $this->db->query($sql);
+    }
+    
+    public function delete($id)
+    {
+        $id = (int)$id;
+        
+        $sql = "delete from task where id = '{$id}'";
+        
+        return $this->db->query($sql);
+    }
+    public function getTotalTasks()
+    {
+        $sql = 'SELECT count(id) AS count FROM `task`';
+        $result = $this->db->query($sql);
+        return $result['count'];
+    }
+    
+    public static function totalPages($total_tasks,$count_per_page)
+    {
+        if($total_tasks<$count_per_page)
+        {
+            return false;
+        }
+        
+        $pages_amount = intval(($total_tasks - 1) / COUNT_PER_PAGE) + 1;
+        
+        return $pages_amount;
     }
 }
